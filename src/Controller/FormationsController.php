@@ -38,7 +38,24 @@ class FormationsController extends AbstractController {
         ]);
     }
 
-   
+    /**
+     * @Route("/formations/tri/{champ}/{ordre}/{table}", name="formations.sort")
+     * @param string $champ
+     * @param string $ordre
+     * @param string $table
+     * @return Response
+     */
+    public function sort($champ, $ordre, $table = ""): Response{
+        $formations = $this->formationRepository->findAllOrderBy($champ, $ordre, $table);
+        $categories = $this->categorieRepository->findAll();
+
+       
+        
+        return $this->render(self::FORMATIONS_PATH, [
+            'formations' => $formations,
+            'categories' => $categories
+        ]);
+    }
 
     /**
      * @Route("/formations/recherche/{champ}/{table}", name="formations.findallcontain")
