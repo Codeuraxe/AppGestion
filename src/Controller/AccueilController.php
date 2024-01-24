@@ -10,7 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
  * Controleur de l'accueil
  *
  * @author emds
- */
+ */         
+
 class AccueilController extends AbstractController{
       
     /**
