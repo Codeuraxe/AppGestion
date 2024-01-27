@@ -2,18 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Categorie;
 
-/**
- * @extends ServiceEntityRepository<Categorie>
- *
- * @method Categorie|null find($id, $lockMode = null, $lockVersion = null)
- * @method Categorie|null findOneBy(array $criteria, array $orderBy = null)
- * @method Categorie[]    findAll()
- * @method Categorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 class CategorieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -21,38 +13,58 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
-    public function add(Categorie $entity, bool $flush = false): void
+    public function add(Categorie $category, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->persist($category);
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
 
-    public function remove(Categorie $entity, bool $flush = false): void
+    public function remove(Categorie $category, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->remove($category);
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
-    
+
     /**
-     * Retourne la liste des catégories des formations d'une playlist
-     * @param type $idPlaylist
+     * @param int $idPlaylist
      * @return array
      */
-    public function findAllForOnePlaylist($idPlaylist): array{
-        return $this->createQueryBuilder('c')
-                ->join('c.formations', 'f')
-                ->join('f.playlist', 'p')
-                ->where('p.id=:id')
-                ->setParameter('id', $idPlaylist)
-                ->orderBy('c.name', 'ASC')   
-                ->getQuery()
-                ->getResult();        
-    }    
+    public function findAllForOnePlaylist($idPlaylist): array
+    {
+        return $this->createQueryBuilderForPlaylist($idPlaylist)
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
+    /**
+     * @param string $nom Le nom de la catégorie à rechercher.
+     * @return Categorie[] Liste des catégories correspondantes.
+     */
+    public function findByNom(string $nom): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere(['c.nom' => $nom])
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param int $idPlaylist
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function createQueryBuilderForPlaylist(int $idPlaylist)
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.formations', 'f')
+            ->join('f.playlist', 'p')
+            ->where('p.id = :id')
+            ->setParameter('id', $idPlaylist);
+    }
 }

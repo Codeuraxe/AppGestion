@@ -1,0 +1,54 @@
+{% extends "baseadmin.html.twig" %}
+
+{% block body %}
+   
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <br>
+    {# Formulaire d'ajout de catégorie #}
+    <form method="post" action="{{ path('admin.ajout.categories') }}" class="mb-3">
+        {# Ajout explicite du token CSRF #}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('ajout_categorie') }}">
+
+        <input type="text" id="nom_categorie" name="nom_categorie" required>
+
+        <button type="submit" class="btn btn-primary">Ajouter la catégorie</button>
+    </form>
+
+    <table class="table table-striped">
+        {# Affichage des catégories #}
+        <thead>
+            <tr>
+                <th class="text-left align-top" scope="col">Catégorie</th>
+                <th class="text-left align-top" scope="col">Formations</th>
+                <th class="text-align-top" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}
+                <tr class="align-middle">
+                    <td class="align-middle">{{ categorie.name }}</td>
+                    <td class="text-left">
+                        {% for formation in categorie.formations %}
+                            {{ formation.title }}<br/>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <div class="col">
+                            <a href="{{ path('admin.categorie.delete', {'id': categorie.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Confirmez la suppression');">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
