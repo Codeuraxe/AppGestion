@@ -57,26 +57,30 @@ class FormationsController extends AbstractController {
         ]);
     }
 
-    /**
+     /**
+     * Récupère les enregistrements selon le $champ et la $valeur
+     * Et selon le $champ et la $valeur si autre $table
      * @Route("/formations/recherche/{champ}/{table}", name="formations.findallcontain")
-     * @param string $champ
+     * @param type $champ
      * @param Request $request
-     * @param string $table
+     * @param type $table
      * @return Response
      */
-    public function findAllContain($champ, Request $request, $table = ""): Response{
+    public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
-        $formations = $this->formationRepository->findByContainValue($champ, $valeur, $table);
+        if($table !=""){
+            $formations = $this->formationRepository->findByContainValueTable($champ, $valeur, $table);
+        }else{
+            $formations = $this->formationRepository->findByContainValue($champ, $valeur);
+        }
         $categories = $this->categorieRepository->findAll();
-
-       
         return $this->render(self::FORMATIONS_PATH, [
             'formations' => $formations,
             'categories' => $categories,
             'valeur' => $valeur,
             'table' => $table
         ]);
-    }  
+    }   
 
     /**
      * @Route("/formations/formation/{id}", name="formations.showone")

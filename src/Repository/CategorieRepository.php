@@ -22,9 +22,9 @@ class CategorieRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Categorie $category, bool $flush = false): void
+    public function remove(Categorie $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($category);
+        $this->getEntityManager()->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -43,16 +43,18 @@ class CategorieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param string $nom Le nom de la catégorie à rechercher.
-     * @return Categorie[] Liste des catégories correspondantes.
+   /**
+     * Retourne toutes les catégories triées sur un champ
+     * @param type $champ
+     * @param type $ordre
+     * @param type $table
+     * @return Categorie[]
      */
-    public function findByNom(string $nom): array
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere(['c.nom' => $nom])
-            ->getQuery()
-            ->getResult();
+    public function findAllOrderBy($champ, $ordre): array{
+            return $this->createQueryBuilder('c')
+                    ->orderBy('c.'.$champ, $ordre)
+                    ->getQuery()
+                    ->getResult();
     }
 
     /**

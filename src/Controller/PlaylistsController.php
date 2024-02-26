@@ -81,24 +81,29 @@ class PlaylistsController extends AbstractController {
     }
 
     /**
+     * Récupère les enregistrements selon le $champ et la $valeur
+     * Et selon le $champ et la $valeur si autre $table
      * @Route("/playlists/recherche/{champ}/{table}", name="playlists.findallcontain")
-     * @param string $champ
+     * @param type $champ
      * @param Request $request
-     * @param string $table
+     * @param type $table
      * @return Response
      */
-    public function findAllContain(string $champ, Request $request, string $table = ""): Response {
+    public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
-        $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
+        if ($table != ""){
+        $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur, $table);
+        }else{
+            $playlists = $this->playlistRepository->findByContainValue($champ, $valeur);
+        }
         $categories = $this->categorieRepository->findAll();
-
         return $this->render(self::PLAYLISTS_PATH, [
             'playlists' => $playlists,
-            'categories' => $categories,
+            'categories' => $categories,            
             'valeur' => $valeur,
             'table' => $table
         ]);
-    }
+    }  
 
     /**
      * @Route("/playlists/playlist/{id}", name="playlists.showone")
