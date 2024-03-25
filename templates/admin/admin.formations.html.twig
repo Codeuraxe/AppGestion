@@ -2,34 +2,32 @@
 
 {% block body %}
     
-     <table class="table table-striped">
+    <table class="table table-striped">
         <thead>
             <tr class="text-left align-top">
                 <th class="text-left align-top" scope="col">
                     Formation<br />
                     <a href="{{ path('admin.formations.sort', {champ:'title', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
                     <a href="{{ path('admin.formations.sort', {champ:'title', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
-                    <form class="form-inline mt-1" method="POST" >
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.formations.findallcontain', {champ:'title'}) }}">
                         <div class="form-group mr-1 mb-2">
-                            <input type="text" class="sm" name="recherche" 
-                                value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
+                            <input type="text" class="sm" name="recherche" value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
                             <input type="hidden" name="_token" value="{{ csrf_token('filtre_title') }}">
                             <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
                         </div>
-                    </form>                    
+                    </form>
                 </th>
                 <th class="text-left align-top" scope="col">
                     Playlist<br />
                     <a href="{{ path('admin.formations.sort', {table:'playlist', champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
                     <a href="{{ path('admin.formations.sort', {table:'playlist', champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
-                    <form class="form-inline mt-1" method="POST" >
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.formations.findallcontain', {table:'playlist', champ:'name'}) }}">
                         <div class="form-group mr-1 mb-2">
-                            <input type="text" class="sm" name="recherche" 
-                                value="{% if valeur|default and table|default and table=='playlist' %}{{ valeur }}{% endif %}">
+                            <input type="text" class="sm" name="recherche" value="{% if valeur|default and table|default and table=='playlist' %}{{ valeur }}{% endif %}">
                             <input type="hidden" name="_token" value="{{ csrf_token('filtre_name') }}">
                             <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
                         </div>
-                    </form>                    
+                    </form>
                 </th>
                 <th class="text-left align-top" scope="col">
                     Catégorie
@@ -37,51 +35,35 @@
                         <select class="form-select form-select-sm" name="recherche" id="recherche" onchange="this.form.submit();">
                             <option value=""></option>
                             {% for categorie in categories %}
-                                <option 
-                                    {% if valeur|default and valeur==categorie.id %} 
-                                        selected
-                                    {% endif %} 
-                                    value="{{ categorie.id }}">{{ categorie.name }}
+                                <option value="{{ categorie.id }}" {% if valeur|default and valeur==categorie.id %}selected{% endif %}>
+                                    {{ categorie.name }}
                                 </option>
                             {% endfor %}
-                        </select>                    
-                    </form>            
+                        </select>
+                    </form>
                 </th>
                 <th class="text-center align-top" scope="col">
                     Date de publication<br />
                     <a href="{{ path('admin.formations.sort', {champ:'publishedAt', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
-                    <a href="{{ path('admin.formations.sort', {champ:'publishedAt', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>                    
+                    <a href="{{ path('admin.formations.sort', {champ:'publishedAt', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
                 </th>
-                <th class="text-center align-top" scope="col">
-                    Détails
+                <th class="text-center align-top" scope="col">Détails</th>
+                <th class="text-align-top" scope="col">
+                    <a href="{{ path('admin.ajout.formations') }}" type="button" class="btn btn-outline-primary btn-sm">Ajouter une formation</a>
                 </th>
-               <th class="text- align-top" scope="col" >
-               <a href="{{ path('admin.ajout.formations') }}" type="button" class="btn btn-outline-primary btn-sm">Ajouter une formation</a>
-            </th>
             </tr>
-           
         </thead>
-        
         <tbody>
             {% for formation in formations %}
-                
                 <tr class="align-middle">
-                    <td>
-                        <h5 class="text-info">
-                            {{ formation.title }}
-                        </h5>
-                    </td>
-                    <td class="align-middle">
-                        {{ formation.playlist.name }}
-                    </td>
+                    <td><h5 class="text-info">{{ formation.title }}</h5></td>
+                    <td class="align-middle">{{ formation.playlist.name }}</td>
                     <td class="text-left">
                         {% for categorie in formation.categories %}
                             {{ categorie.name }}<br/>
                         {% endfor %}
                     </td>
-                    <td class="text-center">
-                        {{ formation.publishedAtString }}
-                    </td>
+                    <td class="text-center">{{ formation.publishedAtString }}</td>
                     <td class="text-center">
                         {% if formation.miniature %}
                             <a href="{{ path('formations.showone', {'id':formation.id}) }}">
@@ -90,18 +72,18 @@
                         {% endif %}
                     </td>
                     <th>
-                    <div class="row">
-                    <div class="col">
-                    <a href="{{ path('admin.edit.formations', {id:formation.id}) }}" type="button" class="btn btn-primary btn-sm mb-2" >Editer</a>
-                    </div>
-                    
-                    <div class="col">
-                    <a href="{{ path('admin.formation.delete', {'id': formation.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Confirmez la suppression');">Supprimer</a>
-                     </div>
-                    </div>
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{ path('admin.edit.formations', {id:formation.id}) }}" type="button" class="btn btn-primary btn-sm mb-2">Editer</a>
+                            </div>
+                            <div class="col">
+                                <a href="{{ path('admin.formation.delete', {'id': formation.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Confirmez la suppression');">Supprimer</a>
+                            </div>
+                        </div>
                     </th>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}
