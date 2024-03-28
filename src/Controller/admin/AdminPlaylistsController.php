@@ -107,18 +107,26 @@ class AdminPlaylistsController extends AbstractController
         ]);
     }
 
-    /**
+     /**
      * @Route("/admin/playlists/recherche/{champ}/{table}", name="admin.playlists.findallcontain")
+     * @param type $champ
+     * @param Request $request
+     * @param type $table
+     * @return Response
      */
-    public function findAllContain($champ, Request $request): Response
-    {
+    public function findAllContain($champ, Request $request, $table=""): Response{
         $valeur = $request->get("recherche");
-        $playlists = $this->playlistRepository->findByContainValue($champ, $valeur);
+        if($table !=""){
+            $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur, $table);
+        }else{
+            $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur);
+        }
         $categories = $this->categorieRepository->findAll();
-        return $this->render('admin/admin.playlists.html.twig', [
-            'playlists' => $playlists,
-            'categories' => $categories,
+        return $this->render("admin/admin.playlists.html.twig", [
+           'playlists' => $playlists,
+             'categories' => $categories,            
             'valeur' => $valeur,
+            'table' => $table
         ]);
     }
 }
