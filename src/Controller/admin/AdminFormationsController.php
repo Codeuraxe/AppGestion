@@ -70,24 +70,25 @@ class AdminFormationsController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/ajout", name="admin.ajout.formations")
-     */
-    public function ajout(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $formations = new Formation();
-        $formformation = $this->createForm(FormationType::class, $formations);
-        $formformation->handleRequest($request);
+            /**
+ * @Route("/ajout", name="admin.ajout.formations")
+ */
+public function ajout(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $formations = new Formation();
+    $formformation = $this->createForm(FormationType::class, $formations);
+    $formformation->handleRequest($request);
 
-        if ($formformation->isSubmitted() && $formformation->isValid()) {
-            $entityManager->flush();
-            return $this->redirectToRoute('admin.formations');
-        }
-
-        return $this->render('admin/admin.ajout.formations.html.twig', [
-            'form' => $formformation->createView(),
-        ]);
+    if ($formformation->isSubmitted() && $formformation->isValid()) {
+        $entityManager->persist($formations); // Ajoutez cette ligne pour persister l'entité
+        $entityManager->flush();
+        return $this->redirectToRoute('admin.formations');
     }
+
+    return $this->render('admin/admin.ajout.formations.html.twig', [
+        'form' => $formformation->createView(),
+    ]);
+}
 
     /**
      * @Route("/formations/tri/{champ}/{ordre}/{table}", name="admin.formations.sort")
