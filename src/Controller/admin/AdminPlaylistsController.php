@@ -3,6 +3,7 @@
 namespace App\Controller\admin;
 
 use App\Entity\Playlist;
+use App\Entity\Formation; 
 use App\Form\PlaylistType;
 use App\Repository\PlaylistRepository;
 use App\Repository\CategorieRepository;
@@ -41,8 +42,17 @@ class AdminPlaylistsController extends AbstractController
      */
     public function delete(Playlist $playlist, EntityManagerInterface $entityManager): Response
     {
+        // Trouver toutes les formations liées à la playlist et les supprimer
+        $formations = $entityManager->getRepository(Formation::class)->findBy(['playlist' => $playlist]);
+        foreach ($formations as $formation) {
+            $entityManager->remove($formation);
+        }
+
+        // Après avoir supprimé les formations, supprimer la playlist
         $entityManager->remove($playlist);
         $entityManager->flush();
+
+        // Rediriger vers la page listant les playlists, ou une autre page de votre choix
         return $this->redirectToRoute('admin.playlists');
     }
 
@@ -109,22 +119,19 @@ class AdminPlaylistsController extends AbstractController
 
      /**
      * @Route("/admin/playlists/recherche/{champ}/{table}", name="admin.playlists.findallcontain")
-     * @param type $champ
-     * @param Request $request
-     * @param type $table
-     * @return Response
      */
-    public function findAllContain($champ, Request $request, $table=""): Response{
+    public function findAllContain($champ, Request $request, $table=""): Response
+    {
         $valeur = $request->get("recherche");
-        if($table !=""){
+        if($table != ""){
             $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur, $table);
         }else{
             $playlists = $this->playlistRepository->findByContainValueTable($champ, $valeur);
         }
         $categories = $this->categorieRepository->findAll();
         return $this->render("admin/admin.playlists.html.twig", [
-           'playlists' => $playlists,
-             'categories' => $categories,            
+            'playlists' => $playlists,
+            'categories' => $categories,            
             'valeur' => $valeur,
             'table' => $table
         ]);
