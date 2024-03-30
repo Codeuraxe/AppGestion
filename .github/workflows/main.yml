@@ -16,4 +16,4 @@ jobs:
           server: 'mediatekformation.online' 
           server-dir: /public_html/
           username: 'u695746505.mediatekformation' 
-          password: ${{ secrets.ftp_password }}
+          password: ${{ secrets.ftp_secret }}
