@@ -1,85 +1,97 @@
-# Mediatekformation
-## Présentation
-Ce site, développé avec Symfony 5.4, permet d'accéder aux vidéos d'auto-formation proposées par une chaîne de médiathèques et qui sont aussi accessibles sur YouTube.<br> 
-Actuellement, seule la partie front office a été développée. Elle contient les fonctionnalités globales suivantes :<br>
-![img1](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/eed72688-c9e5-4509-ab44-7309d3e86041)
-## Les différentes pages
-Voici les 5 pages correspondant aux différents cas d’utilisation.
-### Page 1 : l'accueil
-Cette page présente le fonctionnement du site et les 2 dernières vidéos mises en ligne.<br>
-La partie du haut contient une bannière (logo, nom et phrase présentant le but du site) et le menu permettant d'accéder aux 3 pages principales (Accueil, Formations, Playlists).<br>
-Le centre contient un texte de présentation avec, entre autres, les liens pour accéder aux 2 autres pages principales.<br>
-La partie basse contient les 2 dernières formations mises en ligne. Cliquer sur une image permet d'accéder à la page 3 de présentation de la formation.<br>
-Le bas de page contient un lien pour accéder à la page des CGU : ce lien est présent en bas de chaque page excepté la page des CGU.<br>
-![img2](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/9168058b-7e21-4dc9-a6b8-d6299f5b16c9)
-### Page 2 : les formations
-Cette page présente les formations proposées en ligne (accessibles sur YouTube).<br>
-La partie haute est identique à la page d'accueil (bannière et menu).<br>
-La partie centrale contient un tableau composé de 5 colonnes :<br>
-•	La 1ère colonne ("formation") contient le titre de chaque formation.<br>
-•	La 2ème colonne ("playlist") contient le nom de la playlist dans laquelle chaque formation se trouve.<br>
-•	La 3ème colonne ("catégories") contient la ou les catégories concernées par chaque formation (langage…).<br>
-•	La 4ème colonne ("date") contient la date de parution de chaque formation.<br>
-•	LA 5ème contient la capture visible sur YouTube, pour chaque formation.<br>
-Au niveau des colonnes "formation", "playlist" et "date", 2 boutons permettent de trier les lignes en ordre croissant ("<") ou décroissant (">").<br>
-Au niveau des colonnes "formation" et "playlist", il est possible de filtrer les lignes en tapant un texte : seuls les lignes qui contiennent ce texte sont affichées. Si la zone est vide, le fait de cliquer sur "filtrer" permet de retrouver la liste complète.<br> 
-Au niveau de la catégorie, la sélection d'une catégorie dans le combo permet d'afficher uniquement les formations qui ont cette catégorie. Le fait de sélectionner la ligne vide du combo permet d'afficher à nouveau toutes les formations.<br>
-Par défaut la liste est triée sur la date par ordre décroissant (la formation la plus récente en premier).<br>
-Le fait de cliquer sur une miniature permet d'accéder à la troisième page contenant le détail de la formation.<br>
-![img3](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/6744b340-b6a2-41cb-ae43-18b4ba86f29e)
-### Page 3 : détail d'une formation
-Cette page n'est pas accessible par le menu mais uniquement en cliquant sur une miniature dans la page "Formations" ou une image dans la page "Accueil".<br>
-La partie haute est identique à la page d'accueil (bannière et menu).<br>
-La partie centrale est séparée en 2 parties :<br>
-•	La partie gauche contient la vidéo qui peut être directement visible dans le site ou sur YouTube.<br>
-•	La partie droite contient la date de parution, le titre de la formation, le nom de la playlist, la liste des catégories et sa description détaillée.<br>
-![img4](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/6c8b31ef-b650-4b69-8cf9-fbca8f340cde)
-### Page 4 : les playlists
-Cette page présente les playlists.<br>
-La partie haute est identique à la page d'accueil (bannière et menu).<br>
-La partie centrale contient un tableau composé de 3 colonnes :<br>
-•	La 1ère colonne ("playlist") contient le nom de chaque playlist.<br>
-•	La 2ème colonne ("catégories") contient la ou les catégories concernées par chaque playlist (langage…).<br>
-•	La 3ème contient un bouton pour accéder à la page de présentation de la playlist.<br>
-Au niveau de la colonne "playlist", 2 boutons permettent de trier les lignes en ordre croissant ("<") ou décroissant (">"). Il est aussi possible de filtrer les lignes en tapant un texte : seuls les lignes qui contiennent ce texte sont affichées. Si la zone est vide, le fait de cliquer sur "filtrer" permet de retrouver la liste complète.<br> 
-Au niveau de la catégorie, la sélection d'une catégorie dans le combo permet d'afficher uniquement les playlists qui ont cette catégorie. Le fait de sélectionner la ligne vide du combo permet d'afficher à nouveau toutes les playlists.<br>
-Par défaut la liste est triée sur le nom de la playlist.<br>
-Cliquer sur le bouton "voir détail" d'une playlist permet d'accéder à la page 5 qui présente le détail de la playlist concernée.<br>
-![img5](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/83e4a279-3882-46d2-a7d8-b1b511c184b7)
-### Page 5 : détail d'une playlist
-Cette page n'est pas accessible par le menu mais uniquement en cliquant sur un bouton "voir détail" dans la page "Playlists".<br>
-La partie haute est identique à la page d'accueil (bannière et menu).<br>
-La partie centrale est séparée en 2 parties :<br>
-•	La partie gauche contient les informations de la playlist (titre, liste des catégories, description).<br>
-•	La partie droite contient la liste des formations contenues dans la playlist (miniature et titre) avec possibilité de cliquer sur une formation pour aller dans la page de la formation.<br>
-![img6](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/f72a1d0f-fcc7-4fea-bf91-5a3f301e96db)
-## La base de données
-La base de données exploitée par le site est au format MySQL.
-### Schéma conceptuel de données
-Voici le schéma correspondant à la BDD.<br>
-![img7](https://github.com/CNED-SLAM/mediatekformation/assets/100127886/1f1f4c83-5955-4ae9-b2f2-a030055c1d3f)
-<br>video_id contient le code YouTube de la vidéo, qui permet ensuite de lancer la vidéo à l'adresse suivante :<br>
-https://www.youtube.com/embed/<<<video_id>>>
-### Relations issues du schéma
-<code><strong>formation (id, published_at, title, video_id, description, playlist_id)</strong>
-id : clé primaire
-playlist_id : clé étrangère en ref. à id de playlist
-<strong>playlist (id, name, description)</strong>
-id : clé primaire
-<strong>categorie (id, name)</strong>
-id : clé primaire
-<strong>formation_categorie (id_formation, id_categorie)</strong>
-id_formation, id_categorie : clé primaire
-id_formation : clé étrangère en ref. à id de formation
-id_categorie : clé étrangère en ref. à id de categorie</code>
+### MediatekFormation
 
-Remarques : 
-Les clés primaires des entités sont en auto-incrémentation.<br>
-Le chemin des images (des 2 tailles) n'est pas mémorisé dans la BDD car il peut être fabriqué de la façon suivante :<br>
-"https://i.ytimg.com/vi/" suivi de, soit "/default.jpg" (pour la miniature), soit "/hqdefault.jpg" (pour l'image plus grande de la page d'accueil).
-## Installation de l'application
-- Vérifier que Composer, Git et Wamserver (ou équivalent) sont installés sur l'ordinateur.
-- Télécharger le code et le dézipper dans www de Wampserver (ou dossier équivalent) puis renommer le dossier en "mediatekformation".<br>
-- Ouvrir une fenêtre de commandes en mode admin, se positionner dans le dossier du projet et taper "composer install" pour reconstituer le dossier vendor.<br>
-- Récupérer le fichier mediatekformation.sql en racine du projet et l'utiliser pour créer la BDD MySQL "mediatekformation" en root sans pwd (si vous voulez mettre un login/pwd d'accès, il faut le préciser dans le fichier ".env" en racine du projet).<br>
-- De préférence, ouvrir l'application dans un IDE professionnel. L'adresse pour la lancer est : http://localhost/mediatekformation/public/index.php<br>
+Application d'origine 
+
+L'application MediatekFormation est un projet accessible via le lien GitHub suivant : GitHub - CNED-SLAM/mediatekformation. Vous y trouverez également la documentation complète dans le fichier README du dépôt.
+
+Présentation 
+
+MediatekFormation est une plateforme web développée avec Symfony 5.4, conçue pour permettre l'accès à des vidéos d'auto-formation proposées par une chaîne de médiathèques, également disponibles sur YouTube. 
+Elle intègre une partie back-office destinée à la gestion des formations par les administrateurs.
+
+Fonctionnalités ajoutées 
+
+![reree](https://github.com/Codeuraxe/Kanban2/assets/115351194/10197538-36ab-4e0d-b707-eeb9fb700906)
+
+Les différentes pages
+
+Page n°1: Les formations - Front-office
+
+![gergre](https://github.com/Codeuraxe/Kanban2/assets/115351194/f80f8fd3-8af4-45f3-8c1e-7a878d48c678)
+
+
+Cette page présente les formations disponibles et inclut une fonctionnalité de trie sur les formations, playlists, dates. 
+Ainsi que des fonctions de filtrage sur les formations, playlists et catégories.  
+Voir le dépôt : 
+Page n°2: Les playlists - Front-office
+
+![tgth](https://github.com/Codeuraxe/Kanban2/assets/115351194/14701fbc-af30-4ed5-a02f-9ef974310d11)
+
+
+Cette page présente les playlists disponibles et inclut une fonctionnalité de trie sur les playlists, le nombre formations. Ainsi que des fonctions de filtrage sur les playlists et catégories.  
+Voir le dépôt : 
+Page n°2: Page de Connexion - Back-office
+
+![rhtb](https://github.com/Codeuraxe/Kanban2/assets/115351194/6e9ed767-176c-436a-b59a-586e888e714b)
+
+Accessible via l'ajout de /admin à l'URL ou le bouton gestion, cette page permet aux administrateurs de se connecter au back-office du site.
+Page n°3: Page des Formations - Back-office
+
+![brfd](https://github.com/Codeuraxe/Kanban2/assets/115351194/4d196298-3f89-4aa9-8283-13907c6bbf34)
+
+
+Affichée après connexion de l'administrateur, cette page permet la gestion des formations, avec des options pour éditer ou supprimer une formation, ou en ajouter une nouvelle.
+
+Page n°4: Ajouter une Formation
+
+![uyu](https://github.com/Codeuraxe/Kanban2/assets/115351194/9bbba977-28a1-48b8-949a-fcd30e13ebc1)
+
+
+Cette page s'affiche lorsque l'on souhaite ajouter une nouvelle formation, comprenant un formulaire détaillé pour renseigner toutes les informations nécessaires.
+
+Page n°5: Modifier une Formation
+
+![tvy](https://github.com/Codeuraxe/Kanban2/assets/115351194/714fbd98-89fb-4ee7-abb7-519a67f72432)
+
+Similaire à la page d'ajout, mais pré-remplie avec les informations de la formation à éditer.
+
+Page n°6: Page des Playlists - Back-office
+
+![huku](https://github.com/Codeuraxe/Kanban2/assets/115351194/5cd1d06c-2324-40ff-aad8-5600332c96e0)
+
+Permet la gestion des playlists avec options pour ajouter, éditer ou supprimer une playlist.
+
+Page n°7: Ajout d'une Playlist
+
+![uyuy](https://github.com/Codeuraxe/Kanban2/assets/115351194/ee562adb-8e68-4b0a-a1c7-e08861fdc38f)
+
+Formulaire pour la création d'une nouvelle playlist.
+
+Page n°8: Modification d'une Playlist
+
+![vyuk](https://github.com/Codeuraxe/Kanban2/assets/115351194/3f07f194-3dcb-4b7e-9321-7e731574c4dc)
+
+Permet d'éditer une playlist existante. 
+
+Page n°9: Page des Catégories
+
+![ygu](https://github.com/Codeuraxe/Kanban2/assets/115351194/150c8089-a75b-4309-8fa0-21a272f4bc15)
+
+Permet l'ajout et la suppression de catégories de formations.
+
+Installation de l'application en local
+Suivez ces étapes pour installer l'application en environnement local :
+Assurez-vous que Composer, Git, et Wamserver (ou un équivalent) sont installés sur votre machine.
+Téléchargez le code depuis le dépôt GitHub et dézippez-le dans le dossier www de Wampserver (ou un dossier équivalent), puis renommez le dossier en "mediatekformation".
+Ouvrez une fenêtre de commandes en mode administrateur, naviguez dans le dossier du projet, et exécutez composer install pour reconstituer le dossier vendor.
+Utilisez le fichier mediatekformation.sql trouvé à la racine du projet pour créer la base de données MySQL nommée "mediatekformation" avec l'utilisateur root sans mot de passe 
+(si vous préférez utiliser des identifiants différents, modifiez le fichier .env à la racine du projet en conséquence).
+Ouvrez l'application dans un IDE professionnel pour de meilleures performances. 
+L'application peut être lancée à l'adresse : http://localhost/mediatekformation/public/index.php.
+
+Tester l'application en ligne
+L'application est également disponible en ligne aux adresses suivantes :
+Accès principal : https://mediatekformation.online
+Page d'authentification admin : https://mediatekformation.online/public/admin
+Documentation technique : 
+
