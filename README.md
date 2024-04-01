@@ -94,5 +94,6 @@ L'application peut être lancée à l'adresse : http://localhost/mediatekformati
 L'application est également disponible en ligne aux adresses suivantes :
 Accès principal : https://mediatekformation.online
 Page d'authentification admin : https://mediatekformation.online/public/admin
-Documentation technique : 
+Documentation technique : https://mega.nz/folder/QOFAlL6T#KZt2tqV0oJWrcE6WrUktpg
+Pour accéder à la documentation technique, téléchargez le dossier et cliquez sur index.html
 
