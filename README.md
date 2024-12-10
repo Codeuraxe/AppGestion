@@ -1,9 +1,5 @@
 # MediatekFormation
 
-Application d'origine 
-
-L'application MediatekFormation est un projet accessible via le lien GitHub suivant : GitHub - CNED-SLAM/mediatekformation. Vous y trouverez également la documentation complète dans le fichier README du dépôt.
-
 Présentation 
 
 MediatekFormation est une plateforme web développée avec Symfony 5.4, conçue pour permettre l'accès à des vidéos d'auto-formation proposées par une chaîne de médiathèques, également disponibles sur YouTube. 
